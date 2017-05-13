@@ -1,0 +1,19 @@
+{
+  "name":"inkl/m1-check24",
+  "type":"magento-module",
+  "homepage":"",
+  "description":"",
+  "authors":[
+    {
+      "name":"Marcus Venghaus",
+      "email":"info@inklammern.de"
+    }
+  ],
+  "extra": {
+	"map":[
+		["app/code/local/Inkl/Check24", "app/code/local/Inkl/Check24"],
+		["app/etc/modules/Inkl_Check24.xml", "app/etc/modules/Inkl_Check24.xml"],
+        ["app/locale/de_DE/Inkl_Check24.csv", "app/locale/de_DE/Inkl_Check24.csv"]
+	]
+  }
+}
