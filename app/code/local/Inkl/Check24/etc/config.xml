@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Inkl_Check24>
+			<version>0.1.0</version>
+		</Inkl_Check24>
+	</modules>
+
+	<global>
+		<blocks>
+			<inkl_check24>
+				<class>Inkl_Check24_Block</class>
+			</inkl_check24>
+		</blocks>
+
+		<helpers>
+			<inkl_check24>
+				<class>Inkl_Check24_Helper</class>
+			</inkl_check24>
+		</helpers>
+
+		<models>
+			<inkl_check24>
+				<class>Inkl_Check24_Model</class>
+				<resourceModel>inkl_check24_resource</resourceModel>
+			</inkl_check24>
+			<inkl_check24_resource>
+				<class>Inkl_Check24_Model_Resource</class>
+				<entities>
+					<orders>
+						<table>check24_orders</table>
+					</orders>
+				</entities>
+			</inkl_check24_resource>
+		</models>
+
+		<resources>
+			<inkl_check24_setup>
+				<setup>
+					<module>Inkl_Check24</module>
+				</setup>
+			</inkl_check24_setup>
+		</resources>
+	</global>
+
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<inkl_check24 after="Mage_Adminhtml">Inkl_Check24_Adminhtml</inkl_check24>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+
+	<adminhtml>
+		<menu>
+			<sales>
+				<children>
+					<inkl_check24 translate="title">
+						<title>Check24 Orders</title>
+						<action>adminhtml/check24Order</action>
+						<sort_order>11</sort_order>
+					</inkl_check24>
+				</children>
+			</sales>
+		</menu>
+
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<inkl_check24>
+											<title>Check24</title>
+										</inkl_check24>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+
+		<translate>
+			<modules>
+				<Inkl_Check24>
+					<files>
+						<default>Inkl_Check24.csv</default>
+					</files>
+				</Inkl_Check24>
+			</modules>
+		</translate>
+	</adminhtml>
+
+	<default>
+		<payment>
+			<check24>
+				<active>1</active>
+				<model>inkl_check24/payment_check24</model>
+				<order_status>processing</order_status>
+				<title>Check24</title>
+				<payment_action>sale</payment_action>
+			</check24>
+		</payment>
+	</default>
+
+	<crontab>
+		<jobs>
+			<inkl_check24_order>
+				<schedule>
+					<cron_expr>*/10 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>inkl_check24/cron_order::run</model>
+				</run>
+			</inkl_check24_order>
+		</jobs>
+	</crontab>
+
+</config>
