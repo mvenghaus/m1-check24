@@ -9,6 +9,9 @@
       "email":"info@inklammern.de"
     }
   ],
+  "require": {
+		"magento-hackathon/magento-composer-installer": "*",
+  },
   "extra": {
 	"map":[
 		["app/code/local/Inkl/Check24", "app/code/local/Inkl/Check24"],
