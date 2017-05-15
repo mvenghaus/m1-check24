@@ -47,7 +47,11 @@ class Inkl_Check24_Model_OpenTrans_Order
 
 	public function getInvoiceLastname()
 	{
-		return $this->xpathQuery("//PARTY_ROLE[text()='invoice']/following-sibling::ADDRESS//NAME3");
+		$lastname = $this->xpathQuery("//PARTY_ROLE[text()='invoice']/following-sibling::ADDRESS//NAME3");
+		
+        $lastname = str_replace(' (nur Rechnungsadresse)', '', $lastname);
+		
+		return $lastname;
 	}
 
 	public function getInvoiceStreet()
