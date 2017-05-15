@@ -121,6 +121,10 @@ class Inkl_Check24_Model_Process_Order
 		{
 			$quote->addProduct($orderItem['product'], $orderItem['qty']);
 		}
+
+		$quote
+			->collectTotals()
+			->setTotalsCollectedFlag(false);
 	}
 
 	/**
@@ -129,8 +133,6 @@ class Inkl_Check24_Model_Process_Order
 	 */
 	private function setShippingMethod(Mage_Sales_Model_Quote $quote, Inkl_Check24_Model_OpenTrans_Order $openTransOrder)
 	{
-		Mage::log(sprintf('%s - setShippingMethod | start', $openTransOrder->getOrderId()), null, 'check24--orders.log');
-
 		$quote->getShippingAddress()
 			->setCollectShippingRates(true)
 			->collectShippingRates();
@@ -138,27 +140,17 @@ class Inkl_Check24_Model_Process_Order
 		$shippingMethod = '';
 		$shippingCarrier = Mage::helper('inkl_check24/config_order')->getShippingCarrier($openTransOrder->getStoreId());
 
-		Mage::log(sprintf('%s - setShippingMethod | config carrier: %s', $openTransOrder->getOrderId(), $shippingCarrier), null, 'check24--orders.log');
-
 		foreach ($quote->getShippingAddress()->getShippingRatesCollection() as $rate)
 		{
-			Mage::log(sprintf('%s - setShippingMethod | possible carrier: %s', $openTransOrder->getOrderId(), $rate->getCarrier()), null, 'check24--orders.log');
-
 			if ($rate->getCarrier() == $shippingCarrier)
 			{
-				Mage::log(sprintf('%s - setShippingMethod | found carrier: %s', $openTransOrder->getOrderId(), $rate->getCarrier()), null, 'check24--orders.log');
-
 				$shippingMethod = $rate->getCode();
 				break;
 			}
 		}
 
-		Mage::log(sprintf('%s - setShippingMethod | found rate: %s', $openTransOrder->getOrderId(), $shippingMethod), null, 'check24--orders.log');
-
 		$quote->getShippingAddress()
 			->setShippingMethod($shippingMethod);
-
-		Mage::log(sprintf('%s - setShippingMethod | end', $openTransOrder->getOrderId()), null, 'check24--orders.log');
 	}
 
 	/**
