@@ -11,8 +11,6 @@ class Inkl_Check24_Model_Mail_Abstract
 			->setTemplateSubject($subject)
 			->setTemplateText($body);
 
-		print_r($emailTemplate);
-
 		return $emailTemplate->send($to);
 	}
 

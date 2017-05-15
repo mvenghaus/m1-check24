@@ -60,7 +60,7 @@ class Inkl_Check24_Model_Process_Order
 		$service->submitAll();
 		$order = $service->getOrder();
 
-		//$order->sendNewOrderEmail();
+		$order->sendNewOrderEmail();
 
 		return $order;
 	}
