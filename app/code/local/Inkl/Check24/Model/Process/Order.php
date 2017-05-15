@@ -11,10 +11,11 @@ class Inkl_Check24_Model_Process_Order
 			{
 				$openTransOrder = Mage::getModel('inkl_check24/openTrans_order')->load($check24Order->getContent());
 
-				$this->createMagentoOrder($openTransOrder);
+				$magentoOrder = $this->createMagentoOrder($openTransOrder);
 
 				$check24Order
 					->setProcessed(true)
+					->setMagentoOrderId($magentoOrder->getId())
 					->save();
 
 			} catch (Exception $e)
@@ -23,6 +24,11 @@ class Inkl_Check24_Model_Process_Order
 					->setError(true)
 					->setErrorMessage($e->getMessage())
 					->save();
+
+				Mage::getSingleton('inkl_check24/mail_order_error')->send(
+					[Mage::helper('inkl_check24/config_general')->getNotificationEmail()],
+					$check24Order
+				);
 			}
 		}
 	}
@@ -54,7 +60,9 @@ class Inkl_Check24_Model_Process_Order
 		$service->submitAll();
 		$order = $service->getOrder();
 
-		$order->sendNewOrderEmail();
+		//$order->sendNewOrderEmail();
+
+		return $order;
 	}
 
 	/**
