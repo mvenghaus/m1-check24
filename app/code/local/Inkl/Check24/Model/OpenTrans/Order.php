@@ -143,6 +143,7 @@ class Inkl_Check24_Model_OpenTrans_Order
 			$baseProduct = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
 
 			$product = Mage::getModel('catalog/product')
+                ->setId($baseProduct->getId())
 				->setTypeId('simple')
 				->setSku($sku)
 				->setTaxClassId($baseProduct->getTaxClassId())
