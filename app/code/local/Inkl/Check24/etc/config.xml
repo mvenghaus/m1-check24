@@ -72,6 +72,13 @@
 			<resources>
 				<admin>
 					<children>
+						<sales>
+							<children>
+								<inkl_check24>
+									<title>Check24</title>
+								</inkl_check24>
+							</children>
+						</sales>
 						<system>
 							<children>
 								<config>

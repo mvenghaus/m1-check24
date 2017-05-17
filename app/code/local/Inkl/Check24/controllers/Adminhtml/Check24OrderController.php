@@ -12,7 +12,7 @@ class Inkl_Check24_Adminhtml_Check24OrderController extends Mage_Adminhtml_Contr
 
 	protected function _isAllowed()
 	{
-		return Mage::getSingleton('admin/session')->isAllowed('admin/system/config/inkl_check24');
+		return Mage::getSingleton('admin/session')->isAllowed('admin/sales/inkl_check24');
 	}
 
 }
