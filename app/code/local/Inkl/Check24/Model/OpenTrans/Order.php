@@ -49,7 +49,7 @@ class Inkl_Check24_Model_OpenTrans_Order
 	{
 		$lastname = $this->xpathQuery("//PARTY_ROLE[text()='invoice']/following-sibling::ADDRESS//NAME3");
 
-        $lastname = str_replace(' (nur Rechnungsadresse)', '', $lastname);
+		$lastname = str_replace(' (nur Rechnungsadresse)', '', $lastname);
 
 		return $lastname;
 	}
@@ -140,7 +140,13 @@ class Inkl_Check24_Model_OpenTrans_Order
 		foreach ($orderItemElements as $orderItemElement)
 		{
 			$sku = $this->xpathQuery('//SUPPLIER_PID', '', $orderItemElement);
-			$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku)
+			$baseProduct = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+
+			$product = Mage::getModel('catalog/product')
+				->setId($baseProduct->getId())
+				->setTypeId('simple')
+				->setSku($sku)
+				->setTaxClassId($baseProduct->getTaxClassId())
 				->setName($this->xpathQuery('//REMARK[@type=\'product_name\']', '', $orderItemElement))
 				->setPrice($this->xpathQuery('//PRICE_AMOUNT', '', $orderItemElement))
 				->setFinalPrice($this->xpathQuery('//PRICE_AMOUNT', '', $orderItemElement));
