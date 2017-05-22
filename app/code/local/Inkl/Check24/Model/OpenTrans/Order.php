@@ -139,7 +139,7 @@ class Inkl_Check24_Model_OpenTrans_Order
 		/** @var DOMElement $domElement */
 		foreach ($orderItemElements as $orderItemElement)
 		{
-			$sku = $this->xpathQuery('//SUPPLIER_PID', '', $orderItemElement);
+			$sku = $this->xpathQuery('.//SUPPLIER_PID', '', $orderItemElement);
 			$baseProduct = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
 
 			$product = Mage::getModel('catalog/product')->load($baseProduct->getId())
@@ -149,7 +149,7 @@ class Inkl_Check24_Model_OpenTrans_Order
 
 			$orderItems[] = [
 				'product' => $product,
-				'qty' => (int)$this->xpathQuery('//QUANTITY', '', $orderItemElement)
+				'qty' => (int)$this->xpathQuery('.//QUANTITY', '', $orderItemElement)
 			];
 		}
 
