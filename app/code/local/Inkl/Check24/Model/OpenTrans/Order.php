@@ -143,9 +143,9 @@ class Inkl_Check24_Model_OpenTrans_Order
 			$baseProduct = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
 
 			$product = Mage::getModel('catalog/product')->load($baseProduct->getId())
-				->setName($this->xpathQuery('//REMARK[@type=\'product_name\']', '', $orderItemElement))
-				->setPrice($this->xpathQuery('//PRICE_AMOUNT', '', $orderItemElement))
-				->setFinalPrice($this->xpathQuery('//PRICE_AMOUNT', '', $orderItemElement));
+				->setName($this->xpathQuery('.//REMARK[@type=\'product_name\']', '', $orderItemElement))
+				->setPrice($this->xpathQuery('.//PRICE_AMOUNT', '', $orderItemElement))
+				->setFinalPrice($this->xpathQuery('.//PRICE_AMOUNT', '', $orderItemElement));
 
 			$orderItems[] = [
 				'product' => $product,
