@@ -56,7 +56,11 @@ class Inkl_Check24_Model_OpenTrans_Order
 
 	public function getInvoiceStreet()
 	{
-		return $this->xpathQuery("//PARTY_ROLE[text()='invoice']/following-sibling::ADDRESS//STREET");
+		return Mage::helper('inkl_check24/street')->buildStreetData(
+			$this->xpathQuery("//PARTY_ROLE[text()='invoice']/following-sibling::ADDRESS//STREET"),
+			$this->xpathQuery("//PARTY_ROLE[text()='invoice']/following-sibling::ADDRESS//ADDRESS_REMARKS"),
+			$this->getStoreId()
+		);
 	}
 
 	public function getInvoicePostcode()
@@ -101,7 +105,11 @@ class Inkl_Check24_Model_OpenTrans_Order
 
 	public function getDeliveryStreet()
 	{
-		return $this->xpathQuery("//PARTY_ROLE[text()='delivery']/following-sibling::ADDRESS//STREET");
+		return Mage::helper('inkl_check24/street')->buildStreetData(
+			$this->xpathQuery("//PARTY_ROLE[text()='delivery']/following-sibling::ADDRESS//STREET"),
+			$this->xpathQuery("//PARTY_ROLE[text()='delivery']/following-sibling::ADDRESS//ADDRESS_REMARKS"),
+			$this->getStoreId()
+		);
 	}
 
 	public function getDeliveryPostcode()
