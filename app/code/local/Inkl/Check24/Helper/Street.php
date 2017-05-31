@@ -1,5 +1,7 @@
 <?php
 
+use Inkl\AddressUtils\StreetSplitter;
+
 class Inkl_Check24_Helper_Street extends Mage_Core_Helper_Abstract
 {
 
@@ -9,7 +11,8 @@ class Inkl_Check24_Helper_Street extends Mage_Core_Helper_Abstract
 
 		if (Mage::helper('inkl_check24/config_order')->shouldSplitStreet($storeId))
 		{
-			foreach ($this->splitStreet($street) as $part)
+			$parts = (new StreetSplitter())->split($street);
+			foreach ($parts as $part)
 			{
 				$streetData[] = $part;
 			}
@@ -26,28 +29,4 @@ class Inkl_Check24_Helper_Street extends Mage_Core_Helper_Abstract
 		return $streetData;
 	}
 
-	public function splitStreet($street)
-	{
-		$street = $this->removeSpaceFromCharStreetNumber(trim($street));
-
-		if (preg_match('/[\d]+[a-zA-Z]{0,1}$/is', $street, $results))
-		{
-			$streetNumber = current($results);
-			$street = trim(substr($street, 0, (strlen($streetNumber) * -1)));
-
-			return [$street, $streetNumber];
-		}
-
-		return [$street, '-'];
-	}
-
-	private function removeSpaceFromCharStreetNumber($street)
-	{
-		if (preg_match('/ [a-zA-Z]{1}$/is', $street, $results))
-		{
-			$street = substr($street, 0, -2) . trim(current($results));
-		}
-
-		return $street;
-	}
 }
