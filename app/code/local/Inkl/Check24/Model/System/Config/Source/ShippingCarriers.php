@@ -15,7 +15,7 @@ class Inkl_Check24_Model_System_Config_Source_ShippingCarriers
 			$title = Mage::getStoreConfig(sprintf('carriers/%s/title', $code));
 			if (!$title)
 			{
-				$title = $method;
+				$title = $code;
 			}
 
 			$options[] = ['value' => $code, 'label' => sprintf('%s (%s)', $title, $code)];
