@@ -59,7 +59,6 @@ class Inkl_Check24_Model_Import_Ftp
 
 				$ftp->close();
 			}
-
 		} catch (Exception $e)
 		{
 			print_r($e->getMessage());
@@ -73,7 +72,7 @@ class Inkl_Check24_Model_Import_Ftp
 
 		foreach (Mage::app()->getStores() as $store)
 		{
-			if (!$this->generalConfigHelper->isEnabled($store->getId()))
+			if (!$this->isValidStoreFtp($store->getId()))
 			{
 				continue;
 			}
@@ -94,6 +93,15 @@ class Inkl_Check24_Model_Import_Ftp
 		}
 
 		return $ftpAccounts;
+	}
+
+	private function isValidStoreFtp($storeId)
+	{
+		return ($this->generalConfigHelper->isEnabled($storeId) &&
+			$this->ftpConfigHelper->getHost($storeId) &&
+			$this->ftpConfigHelper->getUser($storeId) &&
+			$this->ftpConfigHelper->getPassword($storeId) &&
+			$this->ftpConfigHelper->getPort($storeId));
 	}
 
 }
