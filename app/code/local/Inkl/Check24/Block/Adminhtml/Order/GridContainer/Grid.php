@@ -80,4 +80,18 @@ class Inkl_Check24_Block_Adminhtml_Order_GridContainer_Grid extends Mage_Adminht
 		return '#';
 	}
 
+	protected function _prepareMassaction()
+	{
+		$this->setMassactionIdField('id');
+		$this->getMassactionBlock()->setFormFieldName('ids');
+
+		$this->getMassactionBlock()->addItem('retry', [
+			'label' => Mage::helper('inkl_check24')->__('Retry'),
+			'url' => $this->getUrl('*/*/massRetry'),
+			'confirm' => Mage::helper('inkl_check24')->__('Are you sure?')
+		]);
+
+		return $this;
+	}
+
 }
