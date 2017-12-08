@@ -127,6 +127,11 @@ class Inkl_Check24_Model_Process_Order
 	{
 		foreach ($openTransOrder->getOrderItems() as $orderItem)
 		{
+            if (!$orderItem['product']->getPrice())
+			{
+				throw new Exception(sprintf('invalid order item price - order %s', $openTransOrder->getOrderId()));
+			}
+			
 			$quote->addProduct($orderItem['product'], $orderItem['qty']);
 		}
 
