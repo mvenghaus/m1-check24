@@ -54,7 +54,11 @@ class Inkl_Check24_Model_Process_Order
 		$this->setShippingMethod($quote, $openTransOrder);
 		$this->setPaymentMethod($quote, $openTransOrder);
 
+		Mage::dispatchEvent('inkl_check24_quote_collect_totals_before', ['quote' => $quote]);
+
 		$quote->collectTotals()->save();
+
+		$this->validateQuote($quote);
 
 		$service = Mage::getModel('sales/service_quote', $quote);
 		$service->submitAll();
@@ -63,6 +67,14 @@ class Inkl_Check24_Model_Process_Order
 		$order->sendNewOrderEmail();
 
 		return $order;
+	}
+
+	private function validateQuote(Mage_Sales_Model_Quote $quote)
+	{
+		if (!$quote->getGrandTotal())
+		{
+			throw new Exception('no valid grand total');
+		}
 	}
 
 	/**
